@@ -1,0 +1,9 @@
+openai
+pydantic
+python-dotenv
+pandas
+matplotlib
+requests
+azure-identity
+openpyxl
+json5

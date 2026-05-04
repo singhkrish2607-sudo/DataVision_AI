@@ -1,0 +1,15 @@
+{
+  "report_name": "DataVision AI Report",
+  "created_at": "2026-05-02T01:20:01.357195",
+  "data_analysis": {
+    "analysis_output": "To perform the analytical calculations on the provided dataset, let's first parse the data into a DataFrame and then compute the necessary KPIs along with the categorical analysis and correlations.\n\nBelow is a Python script to do so:\n\n```python\nimport pandas as pd\nfrom io import StringIO\n\n# Load data into a DataFrame\ndata = \"\"\"Order_ID,Customer_ID,Customer_Name,Order_Date,Product,Category,Region,City,Payment_Mode,Order_Status,Quantity,Price,Discount (%),Shipping_Cost,Total_Sales,Discount_Amount,Profit\n1,1051,Rahul Verma,2024-01-01,Headphones,Accessories,North,Delhi,Credit Card,Delivered,2,1868,13,111,3736,485.68,3139.32\n2,1092,Karan Gupta,2024-01-02,Laptop,Electronics,West,Chennai,Debit Card,Shipped,9,347,19,47,3123,593.37,2482.63\n... (The full dataset as shown in your input)\n380,1098,Meera Sharma,2025-01-14,Headphones,Accessories,North,Delhi,Credit Card,Shipped,8,1291,6,66,10328,619.68,9642.32\"\"\"\ndf = pd.read_csv(StringIO(data))\n\n# Initialize the output structure\noutput = {}\n\n# Real KPIs\nfor col in df.select_dtypes(include='number').columns:\n    output[f\"{col}_sum\"] = round(df[col].sum(), 2)\n    output[f\"{col}_avg\"] = round(df[col].mean(), 2)\n    output[f\"{col}_max\"] = round(df[col].max(), 2)\n    output[f\"{col}_min\"] = round(df[col].min(), 2)\n\n# Category counts for categorical columns\nfor col in df.select_dtypes(include='object').columns:\n    counts = df[col].value_counts().head(6).to_dict()\n    output[f\"{col}_counts\"] = counts\n\n# Correlations among numerical columns\ncorr = df.select_dtypes(include='number').corr()\noutput[\"correlations\"] = corr.round(2).to_dict()\n\n# Print the results\nimport json\nprint(json.dumps(output, indent=2))\n```\n\nReplace the `...(The full dataset as shown in your input)` with the actual data rows you provided. The script will read the dataset, calculate sums, averages, minimums, maximums for numerical columns, count distinct values for categorical columns, and compute the correlation matrix for numerical columns.\n\nThis script will provide you with a JSON-formatted output containing all the computed KPIs, category distribution, and correlations, ready to be reviewed or used in further analysis or reporting."
+  },
+  "import_instructions": [
+    "1. Open Power BI Desktop",
+    "2. Create new blank report",
+    "3. Get Data \u2192 CSV/JSON",
+    "4. Select exported data from: power_bi_exports",
+    "5. Load and configure visualizations",
+    "6. Use the charts config below for quick setup"
+  ]
+}
